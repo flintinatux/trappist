@@ -8,10 +8,6 @@ function Sun:new(opts)
   self.y = opts.y
 end
 
--- function Sun:update(dt)
-
--- end
-
 function Sun:draw()
   love.graphics.setColor(150,0,0)
   love.graphics.circle('fill', self.x, self.y, self.r)
