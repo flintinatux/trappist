@@ -20,12 +20,15 @@ function Bomber:bbox()
   return self.x - w/2, self.y - h/2, w, h
 end
 
-function Bomber:die()
+function Bomber:die(other)
   self.list:remove(self)
   shash.remove(self)
-  shaker:shake(0.15)
-  signal.emit('bomber:die')
-  -- show explosion
+
+  if other then
+    shaker:shake(0.15)
+    signal.emit('bomber:die')
+    -- show explosion
+  end
 end
 
 function Bomber:draw()
@@ -41,9 +44,9 @@ function Bomber:draw()
   love.graphics.polygon('fill', verts)
 end
 
-function Bomber:hit()
+function Bomber:hit(other)
   -- play sound
-  self:die()
+  self:die(other)
 end
 
 function Bomber:update(dt)
@@ -53,10 +56,15 @@ function Bomber:update(dt)
 
   shash.each(self, function(o)
     if o.planet then
-      o:hit()
+      o:hit(self)
       self:die()
     end
   end)
+
+  local w, h = love.graphics.getDimensions()
+  if self.x < 0 or self.x > w or self.y < 0 or self.y > h then
+    self:die()
+  end
 end
 
 return Bomber

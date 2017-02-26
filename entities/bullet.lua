@@ -34,7 +34,7 @@ function Bullet:update(dt)
 
   shash.each(self, function(o)
     if o.enemy then
-      o:hit()
+      o:hit(self)
       self:die()
     end
   end)

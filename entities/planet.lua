@@ -5,6 +5,7 @@ local shash  = require('lib.shash')
 local signal = require('vendor.signal')
 
 local daysPerSecond = config.days / config.seconds
+local pi, random = math.pi, math.random
 
 local Planet = Entity:extend()
 
@@ -12,11 +13,11 @@ function Planet:new(opts)
   self.d      = opts.d * 6000 -- distance to sun
   self.name   = opts.name
   self.health = 3
-  self.r      = opts.r * 8    -- planetary radius
+  self.r      = opts.r * 8 -- planetary radius
   self.planet = true
   self.sun    = opts.sun
-  self.t      = opts.t        -- angle of revolution
-  self.w      = opts.w        -- angular velocity
+  self.t      = random() * 2 * pi -- angle of revolution
+  self.w      = opts.w -- angular velocity
   shash.add(self)
 end
 
