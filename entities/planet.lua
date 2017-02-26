@@ -1,5 +1,6 @@
 local config = require('lib.config')
 local Entity = require('lib.entity')
+local shaker = require('entities.shaker')
 local shash  = require('lib.shash')
 
 local daysPerSecond = config.days / config.seconds
@@ -35,7 +36,7 @@ end
 
 function Planet:hit()
   -- play sound
-  -- shake up the screen
+  shaker:shake(0.25)
   self.health = self.health - 1
   if self.health <= 0 then self:die() end
 end

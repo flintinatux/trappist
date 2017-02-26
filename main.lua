@@ -7,6 +7,7 @@ local Enemies = require('entities.enemies')
 local Gun     = require('entities.gun')
 local List    = require('lib.list')
 local Planet  = require('entities.planet')
+local shaker  = require('entities.shaker')
 local signal  = require('vendor.signal')
 local Star    = require('entities.star')
 local Sun     = require('entities.sun')
@@ -30,12 +31,13 @@ for _ = 1, 400 do
 end
 
 function love.draw()
-  bullets:draw()
-  enemies:draw()
-  gun:draw()
-  planets:draw()
+  shaker:draw()
   stars:draw()
   sun:draw()
+  planets:draw()
+  enemies:draw()
+  bullets:draw()
+  gun:draw()
 
   -- Draw debug information in corner
   local stats = love.graphics.getStats()
@@ -53,6 +55,7 @@ end
 
 function love.update(dt)
   if dt > 0.04 then return end
+  shaker:update(dt)
   bullets:update(dt)
   enemies:update(dt)
   gun:update(dt)
