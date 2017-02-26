@@ -27,7 +27,7 @@ function Bomber:die(other)
   if other then
     shaker:shake(0.15)
     signal.emit('bomber:die')
-    -- show explosion
+    -- explode
   end
 end
 
@@ -61,8 +61,8 @@ function Bomber:update(dt)
     end
   end)
 
-  local w, h = love.graphics.getDimensions()
-  if self.x < 0 or self.x > w or self.y < 0 or self.y > h then
+  local gw, gh = love.graphics.getDimensions()
+  if self.x < 0 or self.x > gw or self.y < 0 or self.y > gh then
     self:die()
   end
 end

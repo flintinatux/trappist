@@ -1,5 +1,7 @@
 local Entity = require('lib.entity')
 
+local point = love.graphics.newImage('assets/point.png')
+
 local Star = Entity:extend()
 
 function Star:new(opts)
@@ -10,7 +12,7 @@ end
 
 function Star:draw()
   love.graphics.setColor(255,255,255, self.opacity)
-  love.graphics.points(self.x, self.y)
+  love.graphics.draw(point, self.x, self.y)
 end
 
 return Star

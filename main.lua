@@ -1,6 +1,6 @@
 require('lib.util').import()
 math.randomseed(os.time())
-
+require('vendor.autobatch')
 require('lib.sounds')
 
 local bullets = require('entities.bullets')()
