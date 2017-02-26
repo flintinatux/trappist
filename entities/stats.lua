@@ -23,4 +23,4 @@ function Stats:update(dt)
   self.days = self.days + dt * config.days / config.seconds
 end
 
-return Stats
+return Stats()

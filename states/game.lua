@@ -1,6 +1,7 @@
 local Bullets = require('entities.bullets')
 local debug   = require('entities.debug')
 local defs    = require('lib.planet-defs')
+local Ending  = require('states.ending')
 local Enemies = require('entities.enemies')
 local Gun     = require('entities.gun')
 local List    = require('lib.list')
@@ -8,7 +9,8 @@ local Planet  = require('entities.planet')
 local shaker  = require('entities.shaker')
 local signal  = require('vendor.signal')
 local Star    = require('entities.star')
-local Stats   = require('entities.stats')
+local stats   = require('entities.stats')
+local State   = require('vendor.state')
 local Sun     = require('entities.sun')
 
 love.mouse.setVisible(false)
@@ -24,7 +26,6 @@ function Game:init()
   self.planets:load(defs)
   self.enemies = Enemies({ planets = self.planets })
   self.gun = Gun({ planets = self.planets })
-  self.stats = Stats()
 
   self.stars = List(Star)
   for _ = 1, 400 do
@@ -43,7 +44,7 @@ function Game:draw()
   self.enemies:draw()
   self.bullets:draw()
   self.gun:draw()
-  if self.debugging then debug:draw() else self.stats:draw() end
+  if self.debugging then debug:draw() else stats:draw() end
 end
 
 function Game:keypressed(key)
@@ -57,7 +58,7 @@ function Game:enter()
 end
 
 function Game:leave()
-  signal.emit('start')
+  signal.emit('stop')
 end
 
 function Game:mousepressed(x, y)
@@ -73,7 +74,9 @@ function Game:update(dt)
   self.planets:update(dt)
   self.stars:update(dt)
   self.sun:update(dt)
-  self.stats:update(dt)
+  stats:update(dt)
+
+  if not next(self.planets) then State.switch(Ending) end
 end
 
 return Game
