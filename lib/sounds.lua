@@ -24,5 +24,10 @@ signal.register('shoot', function()
 end)
 
 signal.register('start', function()
+  space:rewind()
   space:play()
+end)
+
+signal.register('stop', function()
+  space:stop()
 end)
