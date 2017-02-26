@@ -23,9 +23,9 @@ function Enemies:draw()
 end
 
 function Enemies:launch()
-  local x, y
   local w, h = love.graphics.getDimensions()
 
+  local x, y
   if math.random(2) > 1 then
     x = math.random(0, 1) * w
     y = math.random() * h

@@ -8,6 +8,7 @@ local Gun     = require('entities.gun')
 local List    = require('lib.list')
 local Planet  = require('entities.planet')
 local signal  = require('vendor.signal')
+local Star    = require('entities.star')
 local Sun     = require('entities.sun')
 
 love.mouse.setVisible(false)
@@ -20,11 +21,20 @@ planets:load(defs)
 local enemies = Enemies({ planets = planets })
 local gun = Gun({ planets = planets })
 
+local stars = List(Star)
+for _ = 1, 400 do
+  stars:insert({
+    x = math.random() * w,
+    y = math.random() * h
+  })
+end
+
 function love.draw()
   bullets:draw()
   enemies:draw()
   gun:draw()
   planets:draw()
+  stars:draw()
   sun:draw()
 
   -- Draw debug information in corner
@@ -47,5 +57,6 @@ function love.update(dt)
   enemies:update(dt)
   gun:update(dt)
   planets:update(dt)
+  stars:update(dt)
   sun:update(dt)
 end
