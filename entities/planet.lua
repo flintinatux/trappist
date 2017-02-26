@@ -1,5 +1,6 @@
 local config = require('lib.config')
 local Entity = require('lib.entity')
+local shash  = require('lib.shash')
 
 local daysPerSecond = config.days / config.seconds
 
@@ -12,6 +13,11 @@ function Planet:new(opts)
   self.sun  = opts.sun
   self.t    = opts.t        -- angle of revolution
   self.w    = opts.w        -- angular velocity
+  shash.add(self)
+end
+
+function Planet:bbox()
+  return self:x() - self.r, self:y() - self.r, 2 * self.r, 2 * self.r
 end
 
 function Planet:draw()
@@ -28,6 +34,7 @@ end
 
 function Planet:update(dt)
   self.t = self.t + self.w * dt * daysPerSecond
+  shash.update(self)
 end
 
 function Planet:x()

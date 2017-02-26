@@ -1,7 +1,7 @@
 require('lib.util').import()
 math.randomseed(os.time())
 
-local Bullets = require('entities.bullets')
+local bullets = require('entities.bullets')()
 local defs    = require('lib.planet-defs')
 local Enemies = require('entities.enemies')
 local Gun     = require('entities.gun')
@@ -17,7 +17,6 @@ local w, h = love.graphics.getDimensions()
 local sun = Sun({ r = 10, x = w/2, y = h/2 })
 local planets = List(compose(Planet, assoc('sun', sun)))
 planets:load(defs)
-local bullets = Bullets()
 local enemies = Enemies({ planets = planets })
 local gun = Gun({ planets = planets })
 
