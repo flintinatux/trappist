@@ -1,4 +1,4 @@
 return {
   days = 20,
-  seconds = 300
+  seconds = 200
 }

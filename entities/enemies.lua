@@ -3,8 +3,8 @@ local config = require('lib.config')
 local Entity = require('lib.entity')
 local List   = require('lib.list')
 
-local final   = 1.25
-local initial = 3.00
+local final   = 0.75
+local initial = 2.00
 local attackTime = 8
 local attackRate = (final - initial) / config.seconds
 

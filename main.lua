@@ -4,6 +4,7 @@ require('vendor.autobatch')
 require('lib.sounds')
 
 local bullets = require('entities.bullets')()
+local debug   = require('entities.debug')
 local defs    = require('lib.planet-defs')
 local Enemies = require('entities.enemies')
 local Gun     = require('entities.gun')
@@ -12,12 +13,14 @@ local Planet  = require('entities.planet')
 local shaker  = require('entities.shaker')
 local signal  = require('vendor.signal')
 local Star    = require('entities.star')
+local stats   = require('entities.stats')()
 local Sun     = require('entities.sun')
 
 love.mouse.setVisible(false)
 
 local w, h = love.graphics.getDimensions()
 
+local debugging = false
 local sun = Sun({ r = 10, x = w/2, y = h/2 })
 local planets = List(compose(Planet, assoc('sun', sun)))
 planets:load(defs)
@@ -40,15 +43,13 @@ function love.draw()
   enemies:draw()
   bullets:draw()
   gun:draw()
+  if debugging then debug:draw() else stats:draw() end
+end
 
-  -- Draw debug information in corner
-  local stats = love.graphics.getStats()
-  love.graphics.reset()
-  love.graphics.setColor(0, 0, 0, 255 * .75)
-  love.graphics.rectangle('fill', 5, 5, 110, 65, 2)
-  love.graphics.setColor(255, 255, 255)
-  love.graphics.print(love.timer.getFPS() .. 'fps', 10, 10)
-  love.graphics.print('drawcalls: ' .. stats.drawcalls, 10, 30)
+function love.keypressed(key)
+  if key == 'd' then
+    debugging = not debugging
+  end
 end
 
 function love.load()
@@ -68,4 +69,5 @@ function love.update(dt)
   planets:update(dt)
   stars:update(dt)
   sun:update(dt)
+  stats:update(dt)
 end

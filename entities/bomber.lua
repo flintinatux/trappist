@@ -57,7 +57,7 @@ function Bomber:update(dt)
   shash.each(self, function(o)
     if o.planet then
       o:hit(self)
-      self:die()
+      self:die(o)
     end
   end)
 
