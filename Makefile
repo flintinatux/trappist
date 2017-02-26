@@ -1,7 +1,13 @@
 DEV_ROCKS = inspect luacheck
 
-build:
+play:
 	@love .
+
+build: clean
+	cd src && zip -rq ../tdn.love . && cd -
+
+clean:
+	rm -f tdn.love
 
 dev:
 	@for rock in $(DEV_ROCKS) ; do \
@@ -12,6 +18,8 @@ dev:
       echo $$rock already installed, skipping ; \
     fi \
 	done;
+	@yarn global add luamin
 
 lint:
 	@luacheck -q .
+
