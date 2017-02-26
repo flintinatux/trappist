@@ -14,6 +14,20 @@ local Sun     = require('entities.sun')
 
 love.mouse.setVisible(false)
 
+local planet = love.audio.newSource('assets/planet.mp3', 'static')
+local laser  = love.audio.newSource('assets/laser.wav', 'static')
+local space  = love.audio.newSource('assets/space.mp3', 'stream')
+space:setVolume(0.5)
+love.audio.play(space)
+
+signal.register('planet:die', function()
+  love.audio.play(planet)
+end)
+
+signal.register('shoot', function()
+  love.audio.play(laser)
+end)
+
 local w, h = love.graphics.getDimensions()
 
 local sun = Sun({ r = 10, x = w/2, y = h/2 })
