@@ -1,6 +1,8 @@
 require('lib.util').import()
 math.randomseed(os.time())
 
+require('lib.sounds')
+
 local bullets = require('entities.bullets')()
 local defs    = require('lib.planet-defs')
 local Enemies = require('entities.enemies')
@@ -13,20 +15,6 @@ local Star    = require('entities.star')
 local Sun     = require('entities.sun')
 
 love.mouse.setVisible(false)
-
-local planet = love.audio.newSource('assets/planet.mp3', 'static')
-local laser  = love.audio.newSource('assets/laser.wav', 'static')
-local space  = love.audio.newSource('assets/space.mp3', 'stream')
-space:setVolume(0.5)
-love.audio.play(space)
-
-signal.register('planet:die', function()
-  love.audio.play(planet)
-end)
-
-signal.register('shoot', function()
-  love.audio.play(laser)
-end)
 
 local w, h = love.graphics.getDimensions()
 
@@ -61,6 +49,10 @@ function love.draw()
   love.graphics.setColor(255, 255, 255)
   love.graphics.print(love.timer.getFPS() .. 'fps', 10, 10)
   love.graphics.print('drawcalls: ' .. stats.drawcalls, 10, 30)
+end
+
+function love.load()
+  signal.emit('start')
 end
 
 function love.mousepressed(x, y)

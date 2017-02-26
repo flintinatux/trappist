@@ -1,5 +1,7 @@
 local Entity = require('lib.entity')
+local shaker = require('entities.shaker')
 local shash  = require('lib.shash')
+local signal = require('vendor.signal')
 
 local w, h = 20, 12
 
@@ -21,6 +23,8 @@ end
 function Bomber:die()
   self.list:remove(self)
   shash.remove(self)
+  shaker:shake(0.15)
+  signal.emit('bomber:die')
   -- show explosion
 end
 
