@@ -16,13 +16,13 @@ function Gun:draw()
   local x, y = self.x, self.y
 
   -- reticle
-  love.graphics.setColor(255,255,255)
+  love.graphics.setColor(255,255,255,200)
   love.graphics.setLineWidth(1)
   love.graphics.line(x, y-10, x, y+10)
   love.graphics.line(x-10, y, x+10, y)
 
   -- line of fire
-  love.graphics.setColor(255,255,255,35)
+  love.graphics.setColor(255,255,255,50)
   love.graphics.setLineWidth(1)
   love.graphics.line(self.nearest:x(), self.nearest:y(), x, y)
 end
