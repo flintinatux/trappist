@@ -1,33 +1,42 @@
-return function(class, init)
-  init = init or {}
-  local idx, list = {}, {}
+return function(klass)
+  local List = {}
+  List.__index = List
 
-  function list:draw()
-    for i = #list, 1, -1 do
-      list[i]:draw()
+  function List:draw()
+    for item in pairs(self) do
+      item:draw()
     end
   end
 
-  function list:insert(item)
-    item = class(item)
-    idx[item] = #list+1
-    list[#list+1] = item
-  end
-
-  function list:remove(item)
-    table.remove(list, idx[item])
-    idx[item] = nil
-  end
-
-  function list:update(dt)
-    for i = #list, 1, -1 do
-      list[i]:update(dt)
+  function List:each(f)
+    for item in pairs(self) do
+      f(item)
     end
   end
 
-  for _, item in ipairs(init) do
-    list:insert(item)
+  function List:insert(data)
+    local item = klass(data)
+    item.list  = self
+    self[item] = true
+    return item
   end
 
-  return list
+  function List:load(list)
+    for _, data in ipairs(list) do
+      self:insert(data)
+    end
+  end
+
+  function List:remove(item)
+    self[item] = nil
+    return item
+  end
+
+  function List:update(dt)
+    for item in pairs(self) do
+      item:update(dt)
+    end
+  end
+
+  return setmetatable({}, List)
 end
