@@ -1,10 +1,10 @@
 DEV_ROCKS = inspect luacheck
 
 play:
-	@love .
+	@love src/
 
 build: clean
-	cd src && zip -rq ../tdn.love . && cd -
+	cd src && zip -rq ../trappist.love . && cd -
 
 clean:
 	rm -f tdn.love
