@@ -21,6 +21,7 @@ end
 function Bomber:die()
   self.list:remove(self)
   shash.remove(self)
+  -- show explosion
 end
 
 function Bomber:draw()
@@ -37,6 +38,7 @@ function Bomber:draw()
 end
 
 function Bomber:hit()
+  -- play sound
   self:die()
 end
 
@@ -44,6 +46,13 @@ function Bomber:update(dt)
   self.x = self.x + self.vx * dt
   self.y = self.y + self.vy * dt
   shash.update(self)
+
+  shash.each(self, function(o)
+    if o.planet then
+      o:hit()
+      self:die()
+    end
+  end)
 end
 
 return Bomber
