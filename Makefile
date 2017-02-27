@@ -4,10 +4,12 @@ play:
 	@love src/
 
 build: clean
-	cd src && zip -rq ../trappist.love . && cd -
+	cd src && zip -9qry ../dist/trappist.love . && cd -
+	cd dist && cp trappist.love trappist.app/Contents/Resources/
+	cd dist && zip -9qry trappist-osx.zip trappist.app
 
 clean:
-	rm -f tdn.love
+	rm -f dist/trappist.love
 
 dev:
 	@for rock in $(DEV_ROCKS) ; do \
@@ -23,3 +25,7 @@ dev:
 lint:
 	@luacheck -q .
 
+setup:
+	curl -L https://bitbucket.org/rude/love/downloads/love-0.10.2-macosx-x64.zip > dist/love.zip
+	unzip -q -d dist dist/love.zip
+	mv dist/love.app dist/trappist.app
