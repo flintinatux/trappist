@@ -9,7 +9,7 @@ build: clean
 	cd dist && zip -9qry trappist-osx.zip trappist.app
 
 clean:
-	rm -f dist/trappist.love
+	rm -f dist/trappist{.love,-osx.zip}
 
 dev:
 	@for rock in $(DEV_ROCKS) ; do \
